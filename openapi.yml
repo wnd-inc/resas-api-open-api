@@ -1,0 +1,54 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://opendata.resas-portal.go.jp'
+security:
+  - apiKey: []
+info:
+  title: RESAS API
+  version: |-
+    地域経済分析システム（RESAS:リーサス）のデータを提供するAPIです。
+    ご利用にはAPIキーが必要になります。
+tags:
+  - name: common
+    description: 共通
+paths:
+  /api/v1/prefectures:
+    get:
+      summary: 都道府県一覧
+      description: 指定された都道府県に関する都道府県データを返します。
+      operationId: getPrefectures
+      tags:
+        - common
+      responses:
+        200:
+          $ref: "#/components/responses/getPrefecturesResponse"
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: X-API-KEY
+      in: header
+  responses:
+    getPrefecturesResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/getPrefecturesResponseSchema"
+  schemas:
+    getPrefecturesResponseSchema:
+      type: object
+      properties:
+        messages:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: "#/components/schemas/prefecture"
+    prefecture:
+      type: object
+      properties:
+        prefCode:
+          type: integer
+        prefName:
+          type: string
