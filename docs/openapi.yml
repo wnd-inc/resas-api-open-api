@@ -50,5 +50,10 @@ components:
       properties:
         prefCode:
           type: integer
+          readOnly: true
         prefName:
           type: string
+          readOnly: true
+      required:
+        - "prefCode"
+        - "prefecture"
