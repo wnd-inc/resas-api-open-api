@@ -56,4 +56,4 @@ components:
           readOnly: true
       required:
         - "prefCode"
-        - "prefecture"
+        - "prefName"
