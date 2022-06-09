@@ -68,6 +68,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/prefecture"
+      required:
+        - message
+        - result
     prefecture:
       type: object
       properties:
@@ -90,6 +93,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/city'
+      required:
+        - messages
+        - result
     city:
       type: object
       properties:
@@ -115,6 +121,11 @@ components:
               1: 政令指定都市の区
               2: 政令指定都市の市
               3: 東京都23区
+      required:
+        - prefCode
+        - cityCode
+        - cityName
+        - bigCityFlag
     prefCode:
       type: integer
       readOnly: true
