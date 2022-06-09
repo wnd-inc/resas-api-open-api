@@ -22,6 +22,18 @@ paths:
       responses:
         200:
           $ref: "#/components/responses/getPrefecturesResponse"
+  /api/v1/cities:
+    get:
+      summary: 市区町村一覧
+      description: 指定された都道府県に関する市区町村データを返します。
+      operationId: getCitiesResponse
+      tags:
+        - common
+      parameters:
+        - $ref: '#/components/parameters/prefCode'
+      responses:
+        200:
+          $ref: "#/components/responses/getCitiesResponse"
 components:
   securitySchemes:
     apiKey:
@@ -35,12 +47,23 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/getPrefecturesResponseSchema"
+    getCitiesResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/getCitiesResponseSchema"
+  parameters:
+    prefCode:
+      required: true
+      $ref: '#/components/schemas/prefCode'
   schemas:
     getPrefecturesResponseSchema:
       type: object
       properties:
         messages:
           type: string
+          nullable: true
         result:
           type: array
           items:
@@ -49,11 +72,50 @@ components:
       type: object
       properties:
         prefCode:
-          type: integer
-          readOnly: true
+          $ref: '#/components/schemas/prefCode'
         prefName:
           type: string
           readOnly: true
+          description: 都道府県名
       required:
         - "prefCode"
         - "prefName"
+    getCitiesResponseSchema:
+      type: object
+      properties:
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/city'
+    city:
+      type: object
+      properties:
+        prefCode:
+          $ref: '#/components/schemas/prefCode'
+        cityCode:
+          type: string
+          readOnly: true
+        cityName:
+          type: string
+          readOnly: true
+        bigCityFlag:
+          type: string
+          readOnly: true
+          enum:
+            - '0'
+            - '1'
+            - '2'
+            - '3'
+          description: |
+            特別区・行政区フラグ
+              0: 一般の市区町村
+              1: 政令指定都市の区
+              2: 政令指定都市の市
+              3: 東京都23区
+    prefCode:
+      type: integer
+      readOnly: true
+      description: 都道府県コード
