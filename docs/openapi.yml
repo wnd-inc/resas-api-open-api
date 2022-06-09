@@ -55,8 +55,11 @@ components:
             $ref: "#/components/schemas/getCitiesResponseSchema"
   parameters:
     prefCode:
+      name: prefCode
+      in: query
       required: true
-      $ref: '#/components/schemas/prefCode'
+      schema:
+        $ref: '#/components/schemas/prefCode'
   schemas:
     getPrefecturesResponseSchema:
       type: object
